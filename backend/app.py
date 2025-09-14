@@ -18,7 +18,7 @@ ALGORITHMS = {
     "heap": heap_sort,
 }
 
-@app.route("/sort", methods=["POST"])
+@app.route("/api/sort", methods=["POST"])
 def sort():
     data = request.get_json()
     array = data.get("array")
@@ -35,5 +35,14 @@ def sort():
     
     return jsonify(steps)
 
+# Vercel exposes the app via a variable named 'api'
+api = app
+
 if __name__ == "__main__":
+    # This part is for local development, Vercel will not run this.
+    # The route is changed to match the production route for consistency.
+    @app.route("/sort", methods=["POST"])
+    def local_sort():
+        return sort()
+        
     app.run(debug=True, port=5000)
