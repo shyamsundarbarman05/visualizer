@@ -14,7 +14,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "cross-env GENERATE_SOURCEMAP=false node_modules/.bin/react-scripts build",
+    "prebuild": "chmod +x ./node_modules/.bin/react-scripts",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -38,7 +39,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",
-    "cross-env": "^7.0.3",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.6"
   }
