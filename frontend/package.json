@@ -14,7 +14,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false node node_modules/react-scripts/bin/react-scripts.js build",
+    "build": "react-scripts build",
+    "postinstall": "chmod +x node_modules/.bin/react-scripts || true",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -42,7 +43,7 @@
     "tailwindcss": "^3.1.6"
   },
   "engines": {
-    "node": "22.x"
+    "node": "18.x"
   }
 }
 

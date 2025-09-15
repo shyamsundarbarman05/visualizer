@@ -1,5 +1,6 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
+import os
 
 from algorithms.bubble import bubble_sort
 from algorithms.insertion import insertion_sort
@@ -7,7 +8,8 @@ from algorithms.merge import merge_sort_generator as merge_sort
 from algorithms.quick import quick_sort_generator as quick_sort
 from algorithms.heap import heap_sort
 
-app = Flask(__name__)
+# Serve the static files from the React build folder
+app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 CORS(app)
 
 ALGORITHMS = {
@@ -35,14 +37,14 @@ def sort():
     
     return jsonify(steps)
 
-# Vercel exposes the app via a variable named 'api'
-api = app
+# Add a catch-all route to serve the React index.html file
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == "__main__":
-    # This part is for local development, Vercel will not run this.
-    # The route is changed to match the production route for consistency.
-    @app.route("/sort", methods=["POST"])
-    def local_sort():
-        return sort()
-        
-    app.run(debug=True, port=5000)
+    app.run(use_reloader=True, port=5000, threaded=True)

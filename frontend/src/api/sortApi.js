@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL =
-  process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5000';
+// The API is now served from the same origin, so we can use a relative path.
+const API_URL = '/api';
 
 export const sort = async (algorithm, array) => {
   const response = await axios.post(`${API_URL}/sort`, {
