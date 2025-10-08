@@ -48,6 +48,11 @@ sorting-visualizer/
     ```
     The backend will be running on `http://127.0.0.1:5000`.
 
+#### Deployment Notes
+
+- The production deployment on Vercel now pins compatible versions of Flask, Flask-Cors, and Werkzeug. The runtime is set to Python 3.11 via `vercel.json` to avoid version mismatches during the build.
+- If you deploy the backend separately from the frontend, expose the API base URL to the React app by setting `REACT_APP_API_BASE_URL` (for example, `https://your-backend-domain/api`).
+
 ### Frontend (React)
 
 1.  Navigate to the `frontend` directory:
