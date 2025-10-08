@@ -18,6 +18,11 @@ ALGORITHMS = {
     "heap": heap_sort,
 }
 
+
+@app.route("/api/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"})
+
 @app.route("/api/sort", methods=["POST"])
 def sort():
     data = request.get_json()

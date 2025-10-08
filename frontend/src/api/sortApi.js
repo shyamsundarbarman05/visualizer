@@ -1,12 +1,24 @@
-import axios from 'axios';
+import axios from "axios";
 
-// The API is now served from the same origin, so we can use a relative path.
-const API_URL = '/api';
+const apiBase = (process.env.REACT_APP_API_BASE_URL || "/api").replace(
+  /\/$/,
+  ""
+);
+
+const client = axios.create({
+  baseURL: apiBase,
+  timeout: 10000,
+});
 
 export const sort = async (algorithm, array) => {
-  const response = await axios.post(`${API_URL}/sort`, {
+  const response = await client.post("/sort", {
     algorithm,
     array,
   });
+  return response.data;
+};
+
+export const checkHealth = async () => {
+  const response = await client.get("/health");
   return response.data;
 };
